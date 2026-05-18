@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { ThrottlerModule } from '@nestjs/throttler';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { AuthModule } from './auth/auth.module';
 import { validateEnvironment } from './config/env.validation';
 import { dataSourceOptions } from './database/data-source';
 import { HealthController } from './health/health.controller';
@@ -27,6 +28,7 @@ import { HealthController } from './health/health.controller';
         migrationsRun: false,
       }),
     }),
+    AuthModule,
   ],
   controllers: [HealthController],
 })
