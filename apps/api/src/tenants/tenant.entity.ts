@@ -27,8 +27,14 @@ export class TenantEntity {
   @Column({ type: 'text', nullable: true })
   description!: string | null;
 
+  @Column({ name: 'studio_type', type: 'varchar', length: 50, nullable: true })
+  studioType!: string | null;
+
   @Column({ name: 'logo_url', type: 'varchar', length: 500, nullable: true })
   logoUrl!: string | null;
+
+  @Column({ name: 'cover_image_url', type: 'varchar', length: 500, nullable: true })
+  coverImageUrl!: string | null;
 
   @Column({ type: 'varchar', length: 500, nullable: true })
   address!: string | null;
@@ -53,6 +59,12 @@ export class TenantEntity {
 
   @Column({ length: 50, default: 'America/Mexico_City' })
   timezone!: string;
+
+  @Column({ name: 'business_hours', type: 'jsonb', nullable: true })
+  businessHours!: Record<string, unknown> | null;
+
+  @Column({ name: 'onboarding_completed_at', type: 'timestamp', nullable: true })
+  onboardingCompletedAt!: Date | null;
 
   @Column({ name: 'is_active', default: true })
   isActive!: boolean;

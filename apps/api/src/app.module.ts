@@ -6,6 +6,7 @@ import { AuthModule } from './auth/auth.module';
 import { validateEnvironment } from './config/env.validation';
 import { dataSourceOptions } from './database/data-source';
 import { HealthController } from './health/health.controller';
+import { TenantsModule } from './tenants/tenants.module';
 
 @Module({
   imports: [
@@ -29,6 +30,7 @@ import { HealthController } from './health/health.controller';
       }),
     }),
     AuthModule,
+    TenantsModule,
   ],
   controllers: [HealthController],
 })
