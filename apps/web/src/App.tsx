@@ -48,6 +48,53 @@ const dayLabels: Record<string, string> = {
   sunday: 'Dom',
 };
 
+const productHighlights = [
+  {
+    label: 'Agenda en linea',
+    title: 'Tus alumnas reservan solas',
+    text: 'Comparte tu link, muestra horarios disponibles y deja que cada alumna aparte su lugar sin interrumpir tu clase.',
+  },
+  {
+    label: 'Paquetes',
+    title: 'Clases, vigencia y saldo automatico',
+    text: 'Crea paquetes con numero de clases, precio y vencimiento. Flowi descuenta cada reserva y te avisa cuando algo esta por vencer.',
+  },
+  {
+    label: 'Pagos LATAM',
+    title: 'MercadoPago y PayPal listos',
+    text: 'Cobra con metodos familiares para tus alumnas y activa paquetes solo cuando el proveedor confirme el pago.',
+  },
+];
+
+const landingPackages = [
+  {
+    name: 'Starter',
+    price: '$299',
+    description: 'Para instructoras que estan empezando.',
+    features: ['Hasta 30 alumnas', 'Pagina publica', 'Paquetes y reservas'],
+  },
+  {
+    name: 'Pro',
+    price: '$599',
+    description: 'Para estudios con agenda activa.',
+    features: ['Hasta 100 alumnas', 'Dashboard completo', 'Pagos y recordatorios'],
+    featured: true,
+  },
+  {
+    name: 'Studio',
+    price: '$999',
+    description: 'Para equipos y estudios en crecimiento.',
+    features: ['Alumnas ilimitadas', 'Varias instructoras', 'Reportes y prioridad'],
+  },
+];
+
+const workflow = [
+  'Crea tu estudio',
+  'Publica tus paquetes',
+  'Comparte tu link',
+  'Recibe reservas y pagos',
+];
+
 const initialDraft: Draft = {
   email: '',
   password: '',
@@ -66,7 +113,7 @@ const initialDraft: Draft = {
 
 export function App() {
   return (
-    <main className="min-h-screen bg-[#fbf8f1] text-sage-900">
+    <main className="min-h-screen bg-[#FAF7F2] text-[#1C1917]">
       <HomePage />
     </main>
   );
@@ -337,31 +384,354 @@ export function DashboardPage() {
 
 function HomePage() {
   return (
-    <section className="mx-auto flex min-h-screen w-full max-w-5xl flex-col justify-center px-6 py-16">
-      <p className="mb-4 font-mono text-sm uppercase tracking-normal text-terracotta-700">
-        FLW-11
-      </p>
-      <h1 className="max-w-3xl font-display text-5xl leading-tight text-sage-900 md:text-7xl">
-        Crea tu estudio Flowi en minutos.
-      </h1>
-      <p className="mt-6 max-w-2xl text-lg leading-8 text-sage-700">
-        Wizard de onboarding conectado a auth y tenant multi-tenant.
-      </p>
-      <div className="mt-10 flex flex-wrap gap-3">
-        <Link
-          to="/onboarding"
-          className="rounded-flowi bg-sage-800 px-6 py-3 text-sm font-bold text-white"
-        >
-          Empezar onboarding
-        </Link>
-        <Link
-          to="/dashboard"
-          className="rounded-flowi border border-sage-200 px-6 py-3 text-sm font-bold text-sage-800"
-        >
-          Ver dashboard
-        </Link>
+    <>
+      <Navigation />
+      <Hero />
+      <TrustStrip />
+      <ProductSection />
+      <StudioPreview />
+      <PricingSection />
+      <WorkflowSection />
+      <FinalCta />
+      <Footer />
+    </>
+  );
+}
+
+function Navigation() {
+  return (
+    <nav className="fixed left-0 right-0 top-0 z-50 flex h-16 items-center border-b border-[#E8E0D4] bg-[#FAF7F2]/90 px-5 backdrop-blur-md md:px-12">
+      <a
+        href="#inicio"
+        className="font-editorial text-2xl uppercase tracking-[0.12em] text-[#1C1917]"
+      >
+        flowi<span className="text-[#4A7C6F]">.</span>
+      </a>
+      <div className="ml-auto hidden items-center gap-7 text-xs font-medium uppercase tracking-[0.08em] text-[#78716C] md:flex">
+        <a href="#producto" className="transition hover:text-[#1C1917]">
+          Producto
+        </a>
+        <a href="#precios" className="transition hover:text-[#1C1917]">
+          Precios
+        </a>
+        <a href="#flujo" className="transition hover:text-[#1C1917]">
+          Como funciona
+        </a>
+      </div>
+      <Link
+        to="/onboarding"
+        className="ml-auto rounded-full bg-[#4A7C6F] px-5 py-2.5 text-xs font-medium uppercase tracking-[0.08em] text-white md:ml-8"
+      >
+        Crear mi estudio
+      </Link>
+    </nav>
+  );
+}
+
+function Hero() {
+  return (
+    <section
+      id="inicio"
+      className="relative flex min-h-screen items-center justify-center overflow-hidden bg-[#1C1917] px-6 pt-16 text-center"
+    >
+      <div className="absolute inset-0 bg-[linear-gradient(135deg,#1E1D1A_0%,#2C2B28_42%,#1A2822_100%)]" />
+      <div
+        className="absolute inset-0 opacity-80"
+        style={{
+          backgroundImage:
+            'radial-gradient(circle at 28% 48%, rgba(122,158,142,0.18) 0%, transparent 56%), radial-gradient(circle at 82% 18%, rgba(196,113,79,0.10) 0%, transparent 44%)',
+        }}
+      />
+      <div
+        className="absolute inset-0 opacity-20"
+        style={{
+          backgroundImage:
+            'linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px)',
+          backgroundSize: '42px 42px',
+        }}
+      />
+
+      <div className="relative mx-auto max-w-4xl">
+        <div className="mb-8 inline-flex items-center gap-2 rounded-full border border-[#7A9E8E]/40 px-4 py-1.5 font-mono text-[11px] uppercase tracking-[0.12em] text-[#C5DDD8]">
+          <span className="h-1.5 w-1.5 rounded-full bg-[#7A9E8E]" />
+          SaaS para estudios boutique en LATAM
+        </div>
+        <h1 className="font-editorial text-[4.25rem] font-light leading-[0.92] text-white md:text-8xl">
+          Tu estudio,
+          <br />
+          <em className="text-[#C5DDD8]">a tu ritmo.</em>
+        </h1>
+        <p className="mx-auto mt-8 max-w-xl text-base leading-8 text-white/60">
+          Flowi convierte tu agenda, tus paquetes y tus cobros en una experiencia online bonita,
+          simple y profesional para tus alumnas.
+        </p>
+        <div className="mt-10 flex flex-wrap justify-center gap-3">
+          <Link
+            to="/onboarding"
+            className="rounded-full bg-[#4A7C6F] px-8 py-4 text-sm font-medium uppercase tracking-[0.06em] text-white"
+          >
+            Empezar gratis
+          </Link>
+          <a
+            href="#producto"
+            className="rounded-full border border-white/20 px-8 py-4 text-sm font-medium uppercase tracking-[0.06em] text-white/70"
+          >
+            Ver producto
+          </a>
+        </div>
+      </div>
+
+      <div className="absolute bottom-10 right-8 hidden flex-col gap-5 text-right md:flex">
+        <HeroStat value="10 min" label="setup inicial" />
+        <HeroStat value="3 pasos" label="agenda, cobra, fluye" />
+        <HeroStat value="LATAM" label="pagos locales" />
       </div>
     </section>
+  );
+}
+
+function HeroStat({ value, label }: { value: string; label: string }) {
+  return (
+    <div>
+      <div className="font-editorial text-4xl font-light leading-none text-white">{value}</div>
+      <div className="mt-1 font-mono text-[10px] uppercase tracking-[0.12em] text-white/35">
+        {label}
+      </div>
+    </div>
+  );
+}
+
+function TrustStrip() {
+  return (
+    <section className="flex flex-wrap items-center justify-center gap-x-8 gap-y-3 bg-[#4A7C6F] px-6 py-4 text-xs uppercase tracking-[0.08em] text-white">
+      <span>Reservas online</span>
+      <span className="h-1 w-1 rounded-full bg-white/40" />
+      <span>MercadoPago nativo</span>
+      <span className="h-1 w-1 rounded-full bg-white/40" />
+      <span>Paquetes con vigencia</span>
+      <span className="h-1 w-1 rounded-full bg-white/40" />
+      <span>Pagina publica para cada estudio</span>
+    </section>
+  );
+}
+
+function ProductSection() {
+  return (
+    <section
+      id="producto"
+      className="grid gap-16 bg-[#FAF7F2] px-6 py-24 md:grid-cols-[0.9fr_1.1fr] md:px-12"
+    >
+      <div>
+        <p className="section-tag">Producto</p>
+        <h2 className="section-heading">
+          La operacion diaria,
+          <br />
+          <em>sin el caos.</em>
+        </h2>
+        <p className="mt-6 max-w-xl text-[15px] leading-8 text-[#78716C]">
+          Flowi esta pensado para instructoras que quieren administrar su estudio con la misma calma
+          y cuidado con la que dan una clase.
+        </p>
+      </div>
+      <div className="grid gap-4">
+        {productHighlights.map((item, index) => (
+          <article
+            key={item.title}
+            className="group grid gap-5 rounded-md border border-[#E8E0D4] bg-white p-7 transition hover:border-[#C5DDD8] md:grid-cols-[64px_1fr]"
+          >
+            <div className="font-mono text-xs text-[#A8A29E]">0{index + 1}</div>
+            <div>
+              <p className="mb-3 font-mono text-[10px] uppercase tracking-[0.14em] text-[#4A7C6F]">
+                {item.label}
+              </p>
+              <h3 className="font-editorial text-3xl font-light text-[#1C1917]">{item.title}</h3>
+              <p className="mt-3 text-sm leading-7 text-[#78716C]">{item.text}</p>
+            </div>
+          </article>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function StudioPreview() {
+  return (
+    <section className="bg-[#1C1917] px-6 py-24 text-white md:px-12">
+      <div className="mb-12 flex flex-col justify-between gap-8 md:flex-row md:items-end">
+        <div>
+          <p className="section-tag text-[#C5DDD8]">Tu pagina publica</p>
+          <h2 className="section-heading text-white">
+            Tu estudio se ve
+            <br />
+            <em className="text-[#C5DDD8]">tan profesional como tu clase.</em>
+          </h2>
+        </div>
+        <p className="max-w-lg text-[15px] leading-8 text-white/50">
+          Cada estudio tiene su URL, paquetes, horarios, ubicacion y un flujo de reserva pensado
+          para que la alumna compre sin pedir instrucciones.
+        </p>
+      </div>
+
+      <div className="overflow-hidden rounded-md border border-white/10 bg-white/[0.04]">
+        <div className="grid md:grid-cols-[1.15fr_0.85fr]">
+          <div
+            className="min-h-[420px] bg-cover bg-center"
+            style={{
+              backgroundImage:
+                "linear-gradient(rgba(28,25,23,0.08), rgba(28,25,23,0.14)), url('https://images.unsplash.com/photo-1603988363607-e1e4a66962c6?auto=format&fit=crop&w=1400&q=80')",
+            }}
+          />
+          <div className="flex flex-col justify-center bg-[#FAF7F2] p-8 text-[#1C1917] md:p-12">
+            <p className="mb-5 inline-flex w-fit rounded-full border border-[#C5DDD8] px-4 py-1.5 font-mono text-[10px] uppercase tracking-[0.12em] text-[#4A7C6F]">
+              flowi.app/sofia-pilates
+            </p>
+            <h3 className="font-editorial text-5xl font-light leading-none">
+              Sofia Pilates
+              <br />
+              <em className="text-[#4A7C6F]">reserva online.</em>
+            </h3>
+            <p className="mt-6 text-sm leading-7 text-[#78716C]">
+              Paquetes visibles, horarios disponibles, mapa del estudio y pago conectado en un solo
+              lugar.
+            </p>
+            <div className="mt-8 grid gap-3">
+              <PreviewRow label="Paquete Inicio" value="$350 MXN" />
+              <PreviewRow label="Clase disponible" value="Martes 7:00" />
+              <PreviewRow label="Cupo" value="8 de 10 alumnas" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function PreviewRow({ label, value }: { label: string; value: string }) {
+  return (
+    <div className="flex items-center justify-between border-b border-[#E8E0D4] pb-3 text-sm">
+      <span className="text-[#78716C]">{label}</span>
+      <strong className="font-medium text-[#1C1917]">{value}</strong>
+    </div>
+  );
+}
+
+function PricingSection() {
+  return (
+    <section id="precios" className="bg-[#FAF7F2] px-6 py-24 md:px-12">
+      <p className="section-tag">Precios</p>
+      <h2 className="section-heading">
+        Un plan para cada
+        <br />
+        <em>momento del estudio.</em>
+      </h2>
+      <div className="mt-12 grid gap-4 md:grid-cols-3">
+        {landingPackages.map((item) => (
+          <article
+            key={item.name}
+            className={`relative rounded-md border bg-white p-7 ${
+              item.featured ? 'border-[#4A7C6F]' : 'border-[#E8E0D4]'
+            }`}
+          >
+            {item.featured && (
+              <span className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-[#4A7C6F] px-4 py-1 text-[10px] font-medium uppercase tracking-[0.08em] text-white">
+                Recomendado
+              </span>
+            )}
+            <p className="text-xs font-medium uppercase tracking-[0.08em] text-[#78716C]">
+              {item.name}
+            </p>
+            <p className="mt-4 font-editorial text-5xl font-light text-[#1C1917]">
+              {item.price}
+              <span className="font-sans text-sm text-[#78716C]"> MXN/mes</span>
+            </p>
+            <p className="mt-4 text-sm leading-7 text-[#78716C]">{item.description}</p>
+            <div className="my-6 h-px bg-[#E8E0D4]" />
+            <ul className="grid gap-3">
+              {item.features.map((feature) => (
+                <li key={feature} className="flex gap-3 text-sm text-[#57534E]">
+                  <span className="mt-2 h-1.5 w-1.5 rounded-full bg-[#4A7C6F]" />
+                  {feature}
+                </li>
+              ))}
+            </ul>
+            <Link
+              to="/onboarding"
+              className={`mt-8 inline-flex w-full justify-center rounded-full px-5 py-3 text-sm font-medium ${
+                item.featured ? 'bg-[#4A7C6F] text-white' : 'bg-[#F2EDE4] text-[#57534E]'
+              }`}
+            >
+              Elegir plan
+            </Link>
+          </article>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function WorkflowSection() {
+  return (
+    <section id="flujo" className="bg-[#F2EDE4] px-6 py-24 md:px-12">
+      <div className="grid gap-12 md:grid-cols-[0.8fr_1.2fr]">
+        <div>
+          <p className="section-tag">Como funciona</p>
+          <h2 className="section-heading">
+            Del registro al primer link
+            <br />
+            <em>en minutos.</em>
+          </h2>
+        </div>
+        <div className="grid gap-3">
+          {workflow.map((step, index) => (
+            <div
+              key={step}
+              className="grid grid-cols-[58px_1fr] items-center rounded-md border border-[#E8E0D4] bg-[#FAF7F2] p-5"
+            >
+              <span className="font-mono text-xs text-[#A8A29E]">0{index + 1}</span>
+              <span className="font-editorial text-3xl font-light text-[#1C1917]">{step}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function FinalCta() {
+  return (
+    <section id="crear" className="bg-[#4A7C6F] px-6 py-24 text-center text-white md:px-12">
+      <h2 className="font-editorial text-6xl font-light leading-none md:text-7xl">
+        Agenda. Cobra.
+        <br />
+        <em className="text-white/70">Fluye.</em>
+      </h2>
+      <p className="mx-auto mt-6 max-w-lg text-[15px] leading-8 text-white/70">
+        Crea una experiencia profesional para tus alumnas y recupera las horas que hoy se van en
+        mensajes, hojas de calculo y transferencias.
+      </p>
+      <Link
+        to="/onboarding"
+        className="mt-9 inline-flex rounded-full bg-white px-9 py-4 text-sm font-medium text-[#2D5248]"
+      >
+        Crear mi estudio
+      </Link>
+    </section>
+  );
+}
+
+function Footer() {
+  return (
+    <footer className="flex flex-col gap-6 bg-[#1C1917] px-6 py-10 text-white/40 md:flex-row md:items-center md:justify-between md:px-12">
+      <div>
+        <div className="font-editorial text-2xl uppercase tracking-[0.12em] text-white">
+          flowi<span className="text-[#C5DDD8]">.</span>
+        </div>
+        <p className="mt-2 text-sm">Tu estudio, a tu ritmo.</p>
+      </div>
+      <p className="font-mono text-[11px] uppercase tracking-[0.12em]">
+        MVP LATAM - Pilates, Yoga y wellness
+      </p>
+    </footer>
   );
 }
 
